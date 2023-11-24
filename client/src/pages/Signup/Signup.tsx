@@ -1,17 +1,20 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import homeImage from "../../assets/friendspng.png"
 import chatLogo from "../../assets/chatLogo.png"
 import profile from "../../assets/profilepic.jpg"
 import { IoIosAdd } from "react-icons/io";
+import { useSignupUserMutation } from '../../services/appApi';
 import { useRef, useState, ChangeEvent, FormEvent, FC } from 'react';
 import { SignUpFormTypes } from '../../types/types'
 const Signup: FC = () => {
+    const navigate = useNavigate()
     const passwordRef = useRef<HTMLInputElement>(null)
     const confirmPassowrdRef = useRef<HTMLInputElement>(null)
     const profileRef = useRef<HTMLInputElement>(null)
     const [imagePreview, setImagePreview] = useState<string | null>(null)
-    const [loading, setLoading] = useState<boolean>(false)
+    const [loadings, setLoadings] = useState<boolean>(false)
     const [passwordError, setPasswordError] = useState<string>("")
+    const [signUpUser, {isLoading, error}] = useSignupUserMutation()
     const [formData, setFormData] = useState<SignUpFormTypes>({
         userName: "",
         email: "",
@@ -50,10 +53,10 @@ const Signup: FC = () => {
                 body: formData,
             })
             const urlData = await res.json()
-            setLoading(false)
+            setLoadings(false)
             return urlData.url
         } catch (err) {
-            setLoading(false)
+            setLoadings(false)
             console.error(err)
         }
     }
@@ -71,11 +74,24 @@ const Signup: FC = () => {
             setPasswordError('Passwords do not match');
             setImagePreview(null)
         } else {
-            setLoading(true)
+            let userName = formData.userName
+            let email = formData.email
+            let profilePic = formData.profilePic
+            let password = formData.password
+            setLoadings(true)
             const url = await imageUpload(formData.profilePic)
             console.log(url)
             setPasswordError("")
             setImagePreview(null)
+            signUpUser({
+               userName,email,profilePic:url,password
+            }).then(({data}:any) => {
+                if(data) {
+                    navigate('/chat')
+                } else {
+                    navigate('/signup')
+                }
+            })
             setFormData({
                 userName: "",
                 email: "",
@@ -193,7 +209,7 @@ const Signup: FC = () => {
                                     type="submit"
                                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
-                                    {loading ? "loading..." : "Sign Up"}
+                                    {isLoading || loadings ? "loading..." : "Sign Up"}
                                 </button>
                             </div>
                         </form>

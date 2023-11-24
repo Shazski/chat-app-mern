@@ -1,15 +1,27 @@
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import chatLogo from "../../assets/chatLogo.png"
 import signImage from "../../assets/41-413269_jpg-freeuse-library-friendship-child-art-style-children.png"
+import { useLoginUserMutation } from '../../services/appApi';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { loginFormTypes } from '../../types/types';
 function Login() {
+    const navigate = useNavigate()
     const [formData, setFormData] = useState<loginFormTypes>({
         email:"",
         password:""
     })
+    const [loginUser, {isLoading, error}] = useLoginUserMutation()
     const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+        let email = formData.email
+        let password = formData.password
         e.preventDefault();
+        loginUser({
+            email, password
+        }).then(({data}:any) => {
+            if(data) {
+                navigate('/chat')
+            }
+        })
         setFormData({
         email:"",
         password:""   

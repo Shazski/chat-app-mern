@@ -8,7 +8,7 @@ export interface IUser extends Document {
   email: string;
   password: string;
   profilePic: string;
-  newMessage: object;
+  newMessage: Object;
   status: "online" | "offline";
 }
 
@@ -42,6 +42,7 @@ const UserSchema = new mongoose.Schema<IUser>(
     },
     newMessage: {
       type: Object,
+      default:{}
     },
     status: {
       type: String,

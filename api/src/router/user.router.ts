@@ -3,13 +3,15 @@ import User, { IUser } from "../models/UserModel";
 const router: Router = Router();
 
 router.post("/signup", async (req: Request, res: Response) => {
-  const { userName, email, password, profilePic }: IUser = req.body;
+  console.log(req.body,"redux body")
+  const { userName, email, password, profilePic, newMessage }: IUser = req.body;
   try {
     const user: IUser = await User.create({
       userName,
       email,
       password,
       profilePic,
+      newMessage
     });
     console.log(user)
     res.status(201).json(user);
