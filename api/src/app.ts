@@ -31,7 +31,7 @@ const io = new SocketIOServer(server, {
 connect();
 
 //router middleware
-app.use("/", userRouter);
+app.use("/api/user", userRouter);
 
 //middleware for error handling
 app.use((req: Request, res: Response, next: NextFunction) => {

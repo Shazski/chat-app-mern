@@ -4,21 +4,21 @@ import chatLogo from "../../assets/chatLogo.png"
 import profile from "../../assets/profilepic.jpg"
 import { IoIosAdd } from "react-icons/io";
 import { useRef, useState, ChangeEvent, FormEvent, FC } from 'react';
-import { loginFormTypes } from '../../types/types'
-const Signup:FC = () => {
+import { SignUpFormTypes } from '../../types/types'
+const Signup: FC = () => {
     const passwordRef = useRef<HTMLInputElement>(null)
     const confirmPassowrdRef = useRef<HTMLInputElement>(null)
     const profileRef = useRef<HTMLInputElement>(null)
     const [imagePreview, setImagePreview] = useState<string | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
     const [passwordError, setPasswordError] = useState<string>("")
-    const [formData, setFormData] = useState<loginFormTypes>({
+    const [formData, setFormData] = useState<SignUpFormTypes>({
         userName: "",
         email: "",
         password: "",
         profilePic: "",
     })
-    const handleFileUpload = () => {
+    const handleFileUpload: () => void = () => {
         profileRef.current?.click()
     }
 

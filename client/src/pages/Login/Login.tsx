@@ -1,10 +1,31 @@
 import { Link } from 'react-router-dom';
 import chatLogo from "../../assets/chatLogo.png"
 import signImage from "../../assets/41-413269_jpg-freeuse-library-friendship-child-art-style-children.png"
+import { useState, ChangeEvent, FormEvent } from 'react';
+import { loginFormTypes } from '../../types/types';
 function Login() {
+    const [formData, setFormData] = useState<loginFormTypes>({
+        email:"",
+        password:""
+    })
+    const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setFormData({
+        email:"",
+        password:""   
+        })
+        console.log(formData)
+    }
+    const handleChange = (e:ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.currentTarget
+        setFormData({
+            ...formData,
+            [name]: value
+        })
+    }
     return (
         <div className="flex h-screen flex-1  justify-center px-6 py-12 lg:px-8 bg-gray-900 min-w-full">
-            <div className='w-3/4 hidden  md:flex justify-center'>
+            <div className='w-3/4 hidden bg-cover  md:flex justify-center'>
                 <img src={signImage} alt="" />
             </div>
             <div className='w-full'>
@@ -23,7 +44,7 @@ function Login() {
             </div>
 
             <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" action="#" method="POST">
+                <form className="space-y-6" action="#" onSubmit={handleSubmit} method="POST">
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium leading-6 text-white">
                             Email address
@@ -33,8 +54,10 @@ function Login() {
                                 id="email"
                                 name="email"
                                 type="email"
+                                value={formData.email}
+                                onChange={handleChange}
                                 required
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                className="block w-full rounded-md outline-none ps-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
                     </div>
@@ -55,9 +78,11 @@ function Login() {
                                 id="password"
                                 name="password"
                                 type="password"
+                                value={formData.password}
+                                onChange={handleChange}
                                 autoComplete="current-password"
                                 required
-                                className="block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                className="block w-full rounded-md border-0 py-1.5 ps-2 outline-none shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
                     </div>
