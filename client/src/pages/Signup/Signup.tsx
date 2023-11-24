@@ -76,15 +76,13 @@ const Signup: FC = () => {
         } else {
             let userName = formData.userName
             let email = formData.email
-            let profilePic = formData.profilePic
             let password = formData.password
             setLoadings(true)
-            const url = await imageUpload(formData.profilePic)
-            console.log(url)
+            const profilePic = await imageUpload(formData.profilePic)
             setPasswordError("")
             setImagePreview(null)
             signUpUser({
-               userName,email,profilePic:url,password
+               userName,email,profilePic,password
             }).then(({data}:any) => {
                 if(data) {
                     navigate('/chat')

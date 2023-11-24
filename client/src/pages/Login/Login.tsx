@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import chatLogo from "../../assets/chatLogo.png"
 import signImage from "../../assets/41-413269_jpg-freeuse-library-friendship-child-art-style-children.png"
 import { useLoginUserMutation } from '../../services/appApi';

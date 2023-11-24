@@ -2,8 +2,8 @@ import { IoIosSend } from "react-icons/io";
 function MessageForm() {
   return (
     <>
-        <div className="messagebox border h-5/6">
-
+        <div className="messagebox border h-5/6 overflow-auto scrollbar">
+ 
         </div>
         <div className="inputbox h-1/6 mt-8 w-full">
             <form action="" className="md:flex w-full">
