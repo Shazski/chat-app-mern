@@ -14,7 +14,7 @@ const Signup: FC = () => {
     const [imagePreview, setImagePreview] = useState<string | null>(null)
     const [loadings, setLoadings] = useState<boolean>(false)
     const [passwordError, setPasswordError] = useState<string>("")
-    const [signUpUser, {isLoading, error}] = useSignupUserMutation()
+    const [signUpUser, {isLoading}] = useSignupUserMutation()
     const [formData, setFormData] = useState<SignUpFormTypes>({
         userName: "",
         email: "",

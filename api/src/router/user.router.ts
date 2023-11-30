@@ -28,6 +28,7 @@ router.post("/signup", async (req: Request, res: Response) => {
 });
 
 router.post("/login", async (req: Request, res: Response) => {
+  console.log(req.body,"my body")
   const { email, password }: IUser = req.body;
   try {
     const user: IUser | null = await User.findByCredentials(email, password);

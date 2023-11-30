@@ -7,6 +7,7 @@ import Chat from "./pages/Chat/Chat"
 import Navigation from "./components/Navigation"
 import { useSelector } from "react-redux"
 import { AppContext, socket } from "./context/appContext"
+import { AppContextProps } from "./types/types"
 
 function App() {
   const user = useSelector((state: any) => state.user)
@@ -16,8 +17,23 @@ function App() {
   const [messages, setMessages] = useState<string[]>([])
   const [privateMemberMsg, setPrivateMemberMsg] = useState({})
   const [newMessages, setNewMessages] = useState({})
+  const appContextValue: AppContextProps = {
+    socket,
+    currentRoom,
+    setCurrentRoom,
+    members,
+    setMembers,
+    messages,
+    setMessages,
+    privateMemberMsg,
+    setPrivateMemberMsg,
+    rooms,
+    setRooms,
+    newMessages,
+    setNewMessages,
+  } ;
   return (
-    <AppContext.Provider value={{ socket, currentRoom, setCurrentRoom, members, setMembers, messages, setMessages, privateMemberMsg, setPrivateMemberMsg, rooms, setRooms, newMessages, setNewMessages }}>
+    <AppContext.Provider value={appContextValue}>
       <Router>
         <Navigation />
         <Routes>
