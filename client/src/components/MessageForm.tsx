@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 function MessageForm() {
   const [message, setMessage] = useState<string>("")
   const user = useSelector((state: any) => state.user)
-  const { socket, currentRoom, setMessages, messages, privateMemberMsg } = useContext(AppContext)
+  const { socket, currentRoom, setMessages, messages } = useContext(AppContext)
   const getFormattedDate = () => {
     const date: Date = new Date()
     const year: number = date.getFullYear()
@@ -62,7 +62,7 @@ function MessageForm() {
       </div>
       <div className="inputbox h-1/6 mt-2 w-full">
         <form autoComplete="off" action="" onSubmit={handleSubmit} className="md:flex w-full bg-gray-700 font-mono rounded-md text-white">
-          <input  type="text" name="message" id="message" placeholder="Your message.." value={message} onChange={(e: ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)} className=" ps-2 outline-none rounded-md h-12 w-1/2 md:w-5/6 bg-gray-700" />
+          <input type="text" name="message" id="message" placeholder="Your message.." value={message} onChange={(e: ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)} className=" ps-2 outline-none rounded-md h-12 w-1/2 md:w-5/6 bg-gray-700" />
           <button className="  rounded-md h-12 w-20 md:ms-12"><IoIosSend className="text-blue-600 text-4xl ms-4" /> </button>
         </form>
       </div>

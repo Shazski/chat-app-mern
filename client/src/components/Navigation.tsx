@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { MouseEvent, useContext } from "react"
+import { MouseEvent } from "react"
 import chatLogo from '../assets/chatLogo.png'
 import { useSelector } from 'react-redux';
 import { useLogoutUserMutation } from '../services/appApi';
