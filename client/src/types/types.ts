@@ -20,8 +20,8 @@ export interface AppContextProps {
     setMembers: React.Dispatch<React.SetStateAction<string[]>>;
     messages: string[];
     setMessages: React.Dispatch<React.SetStateAction<string[]>>;
-    privateMemberMsg: Record<string, any>; 
-    setPrivateMemberMsg: React.Dispatch<React.SetStateAction<Record<string, any>>>;
+    privateMemberMsg: Record<string, null>; 
+    setPrivateMemberMsg: React.Dispatch<React.SetStateAction<Record<string,any>>>;
     rooms: string[];
     setRooms: React.Dispatch<React.SetStateAction<string[]>>;
     newMessages: Record<string, any>; 

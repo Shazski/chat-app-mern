@@ -81,8 +81,8 @@ function Navigation() {
                                         user && (
                                             <div className='flex '>
                                                 <img src={user.profilePic} className='rounded-full w-9' alt="profilepic" />
-                                                <div className='text-white pt-1 ps-2'>{user.userName}</div>
-                                                <button onClick={handleLogout} className='bg-red-600 text-white rounded-md ms-3 w-20'>Logout</button>
+                                                <div className='text-white pt-2.5 ps-2'>{user.userName}</div>
+                                                <button onClick={handleLogout} className='bg-red-600 text-white rounded-md ms-3 w-20 h-10'>Logout</button>
                                             </div>)
                                     }
                                 </div>

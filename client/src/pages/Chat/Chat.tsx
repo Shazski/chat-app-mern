@@ -4,7 +4,7 @@ import Sidebar from "../../components/Sidebar"
 function Chat() {
   return (
     <>
-      <div className="md:flex">
+      <div className="md:flex  bg-gray-900">
         <div className="md:w-1/4">
           <Sidebar />
         </div>

@@ -5,3 +5,8 @@
 .scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+body {
+  scroll-behavior: smooth;
+  font-family: monospace;
+}

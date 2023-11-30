@@ -12,7 +12,7 @@ import { AppContextProps } from "./types/types"
 function App() {
   const user = useSelector((state: any) => state.user)
   const [rooms, setRooms] = useState<string[]>([])
-  const [currentRoom, setCurrentRoom] = useState<string[]>([])
+  const [currentRoom, setCurrentRoom] = useState<string>("")
   const [members, setMembers] = useState<string[]>([])
   const [messages, setMessages] = useState<string[]>([])
   const [privateMemberMsg, setPrivateMemberMsg] = useState({})

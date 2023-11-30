@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(cors());
 
 //cors connection
-const rooms: string[] = ["general", "tech", "finance", "crypto"];
+const rooms: string[] = ["general", "bck120", "bcr26", "toi"];
 const server: Server<typeof IncomingMessage, typeof ServerResponse> = createServer(app);
 const io = new SocketIOServer(server, {
   cors: {
@@ -112,8 +112,6 @@ io.on("connection", (socket) => {
     socket.broadcast.emit('notifications', room);
   });
 });
-
-// Move the /logout route outside the io.on("connection", ...)
 
 
 const port: Server = server.listen(PORT, () => {

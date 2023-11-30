@@ -14,7 +14,7 @@ const Signup: FC = () => {
     const [imagePreview, setImagePreview] = useState<string | null>(null)
     const [loadings, setLoadings] = useState<boolean>(false)
     const [passwordError, setPasswordError] = useState<string>("")
-    const [signUpUser, {isLoading}] = useSignupUserMutation()
+    const [signUpUser, { isLoading }] = useSignupUserMutation()
     const [formData, setFormData] = useState<SignUpFormTypes>({
         userName: "",
         email: "",
@@ -29,7 +29,6 @@ const Signup: FC = () => {
         const { name, value } = event.currentTarget
         const file: any = event.target.files
         if (name === 'profilePic' && file) {
-            console.log(URL.createObjectURL(file[0]))
             setImagePreview(URL.createObjectURL(file[0]))
             setFormData({
                 ...formData,
@@ -82,9 +81,9 @@ const Signup: FC = () => {
             setPasswordError("")
             setImagePreview(null)
             signUpUser({
-               userName,email,profilePic,password
-            }).then(({data}:any) => {
-                if(data) {
+                userName, email, profilePic, password
+            }).then(({ data }: any) => {
+                if (data) {
                     navigate('/chat')
                 } else {
                     navigate('/signup')

@@ -34,38 +34,36 @@ function MessageForm() {
   }
   const messageBoxRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    // Scroll to the bottom of the message box when messages change
     if (messageBoxRef.current) {
       messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
     }
   }, [messages]);
 
-  console.log(messages, "my message")
   return (
     <>
-      <div className="messagebox border h-5/6 overflow-auto scrollbar" ref={messageBoxRef}>
-      {user && messages?.map((message: any, idx: number) => (
-  <div className="t" key={idx}>
-    <p className="bg-red-700">{message?._id}</p>
-    {message?.messagesByDate.map(({ content, time, from: sender }: { content: string, time: string, from: { userName: string, profilePic: string } }, idx: number) => (
-      <div key={idx} className="m-1 text-white">
-        <div className={`flex w-full ${sender.userName === user.userName ? 'justify-end' : 'justify-start'}`}>
-          <p className={`bg-gray-700 ${sender.userName === user.userName ? 'text-right' : 'text-left'} ps-2`}>{sender?.userName}</p>
-        </div>
-        <div className={`text-xs flex w-full ${sender.userName === user.userName ? 'justify-end' : 'justify-start'} ${sender.userName === user.userName ? 'bg-green-500 rounded-md text-right' : 'bg-blue-500 rounded-md text-left'}`}>
-          {sender.userName !== user.userName && <img src={sender.profilePic} alt="" className="rounded-full w-7 h-7" />}
-          <p className={`ps-2  ${sender.userName === user.userName ? 'text-center' : ''} pt-1`}>{content}</p>
-        </div>
-        <p className="text-xs">{time}</p>
+      <div className="messagebox rounded-md h-5/6 overflow-auto scrollbar bg-gray-800" ref={messageBoxRef}>
+        {user && messages?.map((message: any, idx: number) => (
+          <div className="t" key={idx}>
+            <p className="text-white text-center mt-2">{message?._id}</p>
+            {message?.messagesByDate.map(({ content, time, from: sender }: { content: string, time: string, from: { userName: string, profilePic: string } }, idx: number) => (
+              <div key={idx} className="m-1 text-white">
+                <div className={`flex w-full ${sender.userName === user.userName ? 'justify-end' : 'justify-start'}`}>
+                  {/* <p className={`bg-gray-500 rounded-md ${sender.userName === user.userName ? 'text-right' : 'text-left'} px-1`}>{ sender.userName === user.userName ? "me" : sender?.userName}</p> */}
+                </div>
+                <div className={`text-xs flex w-full ${sender.userName === user.userName ? 'justify-end' : 'justify-start'} ${sender.userName === user.userName ? '' : ''}`}>
+                  {sender.userName !== user.userName && <img src={sender.profilePic} alt="" className="rounded-full w-7 h-7" />}
+                  <p className={`px-2 py-2 text-sm ${sender.userName === user.userName ? 'text-center bg-green-500 rounded-md pt-1' : 'bg-gray-600 rounded-md'}  pt-1`}>{content}</p>
+                </div>
+                <p className={`text-xs ${sender.userName === user.userName ? "text-right" : 'text-left'} `}>{time}</p>
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
-    ))}
-  </div>
-))}
-      </div>
-      <div className="inputbox h-1/6 mt-8 w-full">
-        <form action="" onSubmit={handleSubmit} className="md:flex w-full">
-          <input type="text" name="message" id="message" placeholder="Your message.." value={message} onChange={(e: ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)} className=" border-gray-400 border ps-2 outline-none rounded-md h-12 w-1/2 md:w-5/6" />
-          <button className="border bg-yellow-500 rounded-md h-12 w-20 ms-4 md:ms-12"><IoIosSend className="text-white text-4xl ms-5" /> </button>
+      <div className="inputbox h-1/6 mt-2 w-full">
+        <form autoComplete="off" action="" onSubmit={handleSubmit} className="md:flex w-full bg-gray-700 font-mono rounded-md text-white">
+          <input  type="text" name="message" id="message" placeholder="Your message.." value={message} onChange={(e: ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)} className=" ps-2 outline-none rounded-md h-12 w-1/2 md:w-5/6 bg-gray-700" />
+          <button className="  rounded-md h-12 w-20 md:ms-12"><IoIosSend className="text-blue-600 text-4xl ms-4" /> </button>
         </form>
       </div>
     </>
