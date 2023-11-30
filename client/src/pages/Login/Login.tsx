@@ -22,7 +22,7 @@ function Login() {
             email, password
         }).then(({ data }: any) => {
             if (data) {
-                socket.emit('new user');
+                socket.emit('new-user');
                 navigate('/chat')
             }
         }).catch((err) => {

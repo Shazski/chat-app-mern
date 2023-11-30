@@ -14,8 +14,8 @@ export interface loginFormTypes {
 
 export interface AppContextProps {
     socket: typeof socket;
-    currentRoom: string[];
-    setCurrentRoom: React.Dispatch<React.SetStateAction<string[]>>;
+    currentRoom: string;
+    setCurrentRoom: React.Dispatch<React.SetStateAction<string>>;
     members: string[];
     setMembers: React.Dispatch<React.SetStateAction<string[]>>;
     messages: string[];

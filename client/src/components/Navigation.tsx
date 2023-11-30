@@ -1,17 +1,19 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { MouseEvent } from "react"
+import { MouseEvent, useContext } from "react"
 import chatLogo from '../assets/chatLogo.png'
 import { useSelector } from 'react-redux';
 import { useLogoutUserMutation } from '../services/appApi';
+// import { AppContext } from '../context/appContext';
 
 function Navigation() {
     const navigate = useNavigate()
     const user = useSelector((state: any) => state.user)
+    // const { socket } = useContext(AppContext)
     const [logoutUser] = useLogoutUserMutation()
     const handleLogout = async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         await logoutUser(user);
-        navigate('/login')
+        navigate('/')
     }
 
     return (

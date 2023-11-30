@@ -1,3 +1,5 @@
+// ... existing imports ...
+
 import express, { NextFunction, Request, Response, Application } from "express";
 import { errorHandler } from "./error/error";
 import { IncomingMessage, Server, ServerResponse, createServer } from "http";
@@ -11,8 +13,6 @@ import Message from "./models/MessageModel";
 import User from "./models/UserModel";
 config();
 
-
-
 const app: Application = express();
 const PORT: number = Number(process.env.PORT) || 3000;
 
@@ -22,8 +22,7 @@ app.use(cors());
 
 //cors connection
 const rooms: string[] = ["general", "tech", "finance", "crypto"];
-const server: Server<typeof IncomingMessage, typeof ServerResponse> =
-  createServer(app);
+const server: Server<typeof IncomingMessage, typeof ServerResponse> = createServer(app);
 const io = new SocketIOServer(server, {
   cors: {
     origin: "http://127.0.0.1:5173",
@@ -34,7 +33,27 @@ const io = new SocketIOServer(server, {
 //db connection
 connect();
 
-//router middleware
+app.get("/rooms", (req, res) => {
+  res.json(rooms);
+});
+app.delete('/logout', async(req: Request, res: Response) => {
+  console.log("logout called");
+  try {
+    const {_id, newMessages} = req.body;
+    const user = await User.findById(_id);
+    if(user) {
+      user.status = "offline";
+      user.newMessage = newMessages;
+      await user.save();
+    }
+    const members = await User.find();
+    io.emit("logout-user","persist:root");
+    res.status(200).send("logout success");
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("logout failed");
+  }
+});
 app.use("/api/user", userRouter);
 
 //middleware for error handling
@@ -44,9 +63,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 app.use(errorHandler);
 
-app.get("/rooms", (req, res) => {
-  res.json(rooms);
-});
 app.options("*", cors(), (req, res) => {
   res.sendStatus(204);
 });
@@ -75,11 +91,9 @@ function sortRoomMessagesByDate(messages: any) {
 io.on("connection", (socket) => {
   console.log("socket connected",socket.id)
   socket.on('new-user', async () => {
-    console.log("new user emit")
     const members = await User.find();
-    console.log("new-user anoo")
     io.emit('new-user', members) 
-  })
+  });
 
   socket.on("join-room", async (room) => {
     socket.join(room);
@@ -87,7 +101,20 @@ io.on("connection", (socket) => {
     roomMessages = sortRoomMessagesByDate(roomMessages);
     socket.emit("room-messages", roomMessages);
   });
+
+  socket.on('message-room', async(room, content, sender, time, date) => {
+    console.log("newMEssage", content);
+    const newMessage = await Message.create({content, from:sender, time, date, to:room});
+    let roomMessages = await getLastMessagesFromRoom(room);
+    roomMessages = sortRoomMessagesByDate(roomMessages);
+    //sending message to room
+    io.to(room).emit("room-messages", roomMessages); 
+    socket.broadcast.emit('notifications', room);
+  });
 });
+
+// Move the /logout route outside the io.on("connection", ...)
+
 
 const port: Server = server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

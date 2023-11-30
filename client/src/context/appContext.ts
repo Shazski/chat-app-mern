@@ -7,8 +7,8 @@ export const socket = io(SOCKET_URL, { transports: ["websocket", "polling"] });
 //app context
 export const AppContext = React.createContext<AppContextProps>({
   socket,
-  currentRoom: [],
-  setCurrentRoom: () => {},
+  currentRoom: "",
+  setCurrentRoom: () => "",
   members: [],
   setMembers: () => {},
   messages: [],
